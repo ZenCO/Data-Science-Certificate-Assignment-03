@@ -41,7 +41,7 @@ Below, you need to add something after `geom_` in order to create a histogram. W
 ```{r}
 # What do you need to add to this to make it work?
 ggplot(data, aes(x=student_ratio)) + 
-  geom_<add_something_here>
+  geom_histogram(binwidth = 0.5)
 ```
 
 ----
@@ -53,8 +53,9 @@ Hint, I have already filtered the data for you, just create a line!
 
 ```{r}
 filtered_data = data %>% filter(country_code == 'USA', indicator == 'Primary Education')
-ggplot(filtered_data, aes(x=<add_something_here>, y=student_ratio)) + 
-  geom_<add_something_here>
+ggplot(filtered_data, aes(x=year, y=student_ratio)) + 
+  geom_point() + 
+  geom_line()
 ```
 
 ----
@@ -65,8 +66,10 @@ Hint, I have already filtered the data for you, just create a line (similar to t
 
 ```{r}
 filtered_data = data %>% filter(country_code == 'USA')
-ggplot(filtered_data, aes(x=<add_something_here>, y=student_ratio, <add_something_here>)) +
-  geom_<add_something_here>
+ggplot(filtered_data, aes(x=year, y=student_ratio, color = indicator)) +
+  geom_point()+
+  geom_line()
+
 ```
 
 
@@ -82,22 +85,45 @@ filtered_data = data %>%
   filter(indicator == 'Primary Education', year == 2015) %>%
   arrange(desc(student_ratio)) %>% top_n(10, student_ratio)
 
-ggplot(filtered_data, aes(x=<add_something_here>, y=<add_something_here>)) + 
-  geom_bar(stat='identity')
-  
+ggplot(filtered_data, aes(x=country, y=student_ratio)) + 
+  geom_bar(stat = "identity")
+
 ```
 
 ----
+
+Here we made it into pretty colors just for fun
+
+```{r}
+filtered_data = data %>% 
+  filter(indicator == 'Primary Education', year == 2015) %>%
+  arrange(desc(student_ratio)) %>% top_n(10, student_ratio)
+
+ggplot(filtered_data, aes(x=country, y=student_ratio, fill = country)) + 
+  geom_bar(stat = "identity", show.legend = FALSE)
+
+```
 
 #### Flip the plot above on its side and sort it from high to low (highest on top)  
 
 Hint, we will just continue to use the `filtered_data` from the previous cell
 
 ```{r}
-ggplot(filtered_data, aes(x=<add_something_here>, y=<add_something_here>)) + 
-  geom_bar(stat='identity') + 
-  <add_something_here>
+
+filtered_data = data %>% 
+  filter(indicator == 'Primary Education', year == 2015) %>%
+  arrange(desc(student_ratio)) %>% top_n(10, student_ratio)
+
+filtered_data2 <- filtered_data[order(filtered_data$student_ratio),]
+
+ggplot(filtered_data2, aes(x=country, y=student_ratio, fill = country)) + 
+  geom_bar(stat = "identity", show.legend = FALSE) +
+  coord_flip() 
+
+
+
 ```
+
 
 ----
 
@@ -106,23 +132,28 @@ ggplot(filtered_data, aes(x=<add_something_here>, y=<add_something_here>)) +
 From "The Good, The Bad, The Ugly" data visualization lecture:  
 
 **Name 2 things that make a "Good Visualization":**
-  - 
-  - 
+  - Clearly illustrate a point
+  - Are tailored to the appropriate audience
     
   
 **Name 2 things that make a "Bad Visualization":**
-  - 
-  - 
+  - Are difficult to interpret
+  - Are unintentionally misleading
+  - Contain redundant and boring information
   
 
 **Name 2 things that make an "Ugly Visualization":**
-  - 
-  - 
+  - Are almost impossible to interpret
+  - Are filled with completely worthless information
+  - Are intentionally created to mislead the audience
+  - Are inaccurate
+
   
 **What type of plot is best for visualizing relationships between two variables?**  
-  - 
+  - Scatter plot?
 
 
 **When would you use a pie chart?**
-  - 
+  - If I really wanted to irritate Scott Stoltzman
+  - Or if I was attempting to show the categorical composition of a total population of data
 
