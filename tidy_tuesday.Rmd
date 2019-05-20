@@ -118,7 +118,9 @@ filtered_data2 <- filtered_data[order(filtered_data$student_ratio),]
 
 ggplot(filtered_data2, aes(x = reorder(country, student_ratio), y=student_ratio, fill = country)) + 
   geom_bar(stat = "identity", show.legend = FALSE) +
-  coord_flip() 
+  coord_flip() +
+  ggtitle("2015 Primary Education Class Size") +
+  labs(x="Country",y="Student Ratio")
 
 
 ```
