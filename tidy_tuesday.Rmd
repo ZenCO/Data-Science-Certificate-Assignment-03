@@ -41,7 +41,7 @@ Below, you need to add something after `geom_` in order to create a histogram. W
 ```{r}
 # What do you need to add to this to make it work?
 ggplot(data, aes(x=student_ratio)) + 
-  geom_histogram(binwidth = 0.5)
+  geom_histogram(binwidth = 2.5)
 ```
 
 ----
@@ -114,12 +114,10 @@ filtered_data = data %>%
   filter(indicator == 'Primary Education', year == 2015) %>%
   arrange(desc(student_ratio)) %>% top_n(10, student_ratio)
 
-filtered_data2 <- filtered_data[order(filtered_data$student_ratio),]
-
-ggplot(filtered_data2, aes(x = reorder(country, student_ratio), y=student_ratio, fill = country)) + 
+ggplot(filtered_data, aes(x = reorder(country, student_ratio), y=student_ratio, fill = country)) + 
   geom_bar(stat = "identity", show.legend = FALSE) +
   coord_flip() +
-  ggtitle("2015 Primary Education Class Size") +
+  ggtitle("2015 Top 10 Primary Education Class Size") +
   labs(x="Country",y="Student Ratio")
 
 
